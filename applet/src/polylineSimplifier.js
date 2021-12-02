@@ -68,7 +68,6 @@ class polylineSimplifier {
    */
   createGraph(epsilon, polyline) {
     let graph = this.initializeGraph(polyline);
-
     for (let i = 0; i < polyline.length - 1; ++i) {
       graph[i][i] = 0;
       graph[i][i + 1] = 1;
@@ -76,7 +75,6 @@ class polylineSimplifier {
       for (let j = i + 2; j < polyline.length; ++j) {
         let possibleApprox = true;
         for (let k = i + 1; k < j; ++k) {
-          const dist = this.getDist(polyline[k], polyline[i], polyline[j]);
           if (this.getDist(polyline[k], polyline[i], polyline[j]) > epsilon) {
             possibleApprox = false;
           }
@@ -119,15 +117,15 @@ class polylineSimplifier {
     let dp = [];
     let shortcut = [];
     for (let i = 0; i < n; ++i) {
-      dp[i] = 999;
+      dp[i] = 999999;
     }
     dp[n - 1] = 0;
     for (let i = n - 2; i >= 0; --i) {
       for (let j = 0; j < n; ++j) {
         const weight = IIgraph[i][j];
         if (weight > 0) {
-          dp[i] = min(dp[i], weight + dp[j]);
-          if (dp[i] === weight + dp[j]) {
+          if (dp[i] > weight + dp[j]) {
+            dp[i] = weight + dp[j];
             shortcut[i] = j;
           }
         }

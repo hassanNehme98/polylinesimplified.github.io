@@ -148,8 +148,10 @@
                             unsupervised, splittingbased, global, and incremental discretization method where intervals are determined 
                             based on the Ramer–Douglas–Peucker algorithm. The quality of partitionning  is assessed 
                             based on the standard error of the estimate. Their solution achieved higher predictive accuracy and 
-                            produces less number of inconsistency while it generates larger number of intervals.
-                        </p> <br>             
+                            produces less number of inconsistency while it generates larger number of intervals. <br><br>
+
+                            AND MANY MORE...  
+                        </p> <br>        
                         <h1>Previous Work</h1>
                         <p align="justify">
                             The problem of approximating a polygonal curve by a coarser one is of fundamental importance and has been 
@@ -159,19 +161,38 @@
                             algorithm. Invented in 1970 for reducing the number of points required to represent a digitized line or its caricature 
                             in the context of computer graphics and image processing. It is a heuristical approach that computes an approxmation within
                             a specified error $\varepsilon$. The algorithm simple, it starts by approximating the subchain $P_1^{n}$ by the line
-                            segment $P_1P_n$. If the distance of the farthest vertex $P_k$ from $P_1P_n$ is greater than the tolerance threshold, we 
-                            recursively approximate the two polygonal chains $P_1P_k$ and $P_kP_n$. It has been shown that this algorithm can be implemented 
+                            segment $P_1P_n$. If the distance of the farthest point $P_k$ from $P_1P_n$ is greater than the tolerance threshold, we 
+                            recursively approximate the two polygonal chains $P_1P_k$ and $P_kP_n$ and concatenate their results, otherwise all points in between 
+                            $P_1$ and $P_n$ are removed. It has been shown that this algorithm can be implemented 
                             in $\mathcal{O}({nlog(n)^*})$-time, where $log(n)^*$ is the iterated logarithm function. <br><br>
+                        
+                            <b>Douglas-Peucker ($C$[1, ... ,n], $\varepsilon$)</b><br>
+                            <b>Data:</b> Polygonal chain $C$ = $&ltp_1, p_2, ..., p_n&gt$ and a threshold $\varepsilon$.<br>
+                            <b>Result:</b> A simplified polyline $C'$<br> 
+                            $d_{max}$ = 0;<br>
+                            index = 0;<br>
+
+                        
+                            <b>For</b> $i$ = 2 to $n-1$ <b>do</b>: <br>
+                            
+                            &emsp; $d$ = <b>dist</b>($C[i], [C[1],C[n]]$); &emsp;&emsp; where $[C[1],C[n]]$ is the line segment defined by the first and last point.<br>
+                            &emsp; &emsp; <b>if</b> $d$ > $d_{max}$ <b>then</b>:<br>
+                            
+                            &emsp; &emsp; &emsp; index = $i$;<br>
+                            &emsp; &emsp; &emsp; $d$ = $d_{max}$; <br>
+                            <b>End</b>; <br>
+                            <b>if</b> $d$ > $d_{max}$ <b>then</b>:<br>
+                            &emsp; leftPoints[$1, ..., k$] = Douglas-Peucker($C[1,...,index], \varepsilon$);<br>
+                            &emsp; rightPoints[$1, ..., m$] = Douglas-Peucker($C[index,...,n], \varepsilon$);<br>
+                            &emsp; <b>return</b> <b>CONCAT</b>(leftPoints, rightPoints); <br>
+                            <b>Else</b>: <br>
+                            &emsp; return $[C[1], C[n]]$; <br>
+                            <br><br>
                             Imai and Iri showed that this category of problems can be solved by 
                             formulating them using graph theory, the algorithm that they proposed can be implemented in $\Omega(n^2)$-time.
                             Chan and Chin, Melkman and O'Rourke and Toussaint proposed algorithms of similar flavor that run in $\Omega(n^2)$-time.  
                             Here, we will discuss in details how to implement Imai and Iri's algorithm and the improvement proposed by Chan and Chin.
                         </p>
-                        <br><br>
-                        <figure id="polylineExamples">
-                            <img src="img/polyChainClean.png" alt="Example" style="margin-left: auto; margin-right: auto; width:60%; height:50%; display: block;">
-                            <figcaption align="center"><b>Figure 2:</b> &nbsp;&nbsp;&nbsp; A simple example of a polyline simplification</figcaption>
-                        </figure>
                     </div>
                 </div>
             </section>

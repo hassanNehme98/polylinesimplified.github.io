@@ -105,7 +105,10 @@
                         <br>
                         <ul>
                             <ul style="font-size:22px">
-                                <li> Bring the corners into topological order.</li>
+                                <li> Bring the corners into topological order: 
+                                    This step is crucial when computing the shortest path in a DAG graph but can be ommited in our case
+                                    since the the vertices are already ordered topologically in the initial polyline.
+                                </li> <br>
                                 <li> Solve the problem through dynammic programming: </li>
                             </ul>
                         </ul>
@@ -116,7 +119,7 @@
                             <b>Result:</b> The shortest path in $G_\varepsilon$. <br> 
                             <b>dist</b>($v_1,v_1$) = $\infty$ ; <br>
                             <b>For</b> $j$ = 2 to $n$ <b>do</b>: <br>
-                            &emsp; <b>dist</b>($v_1,v_j$) = $\infty$ <br>
+                            &emsp; <b>dist</b>($v_1,v_j$) = $\infty$;<br>
                             &emsp; <b>For</b> $(v_i, v_j) \in A$ <b>do</b>: <br>
                             &emsp; &emsp; <b>if</b> dist</b>($v_1,v_i$) + $W(v_i, v_j)$ &lt dist</b>($v_1,v_j$) <b>then</b>: <br>
                             &emsp; &emsp; &emsp; dist</b>($v_1, v_j$) = dist</b>($v_1, v_i$) + $W(v_i, v_j)$ <br>
@@ -134,6 +137,11 @@
                             in the proposed solution is therefore the construction of the graph $G_\varepsilon$. An improving
                             algorithm can be found on the next page.             
                         </p>
+                        <br><br>
+                        <figure id="polylineExamples">
+                            <img src="img/polyChainClean.png" alt="Example" style="margin-left: auto; margin-right: auto; width:60%; height:50%; display: block;">
+                            <figcaption align="center"><b>Figure 2:</b> &nbsp;&nbsp;&nbsp; A simple example of a polyline simplification</figcaption>
+                        </figure>
                     </div>
                 </div>
             </section> 
