@@ -182,8 +182,8 @@
                             &emsp; &emsp; &emsp; $d$ = $d_{max}$; <br>
                             <b>End</b>; <br>
                             <b>if</b> $d$ > $d_{max}$ <b>then</b>:<br>
-                            &emsp; leftPoints[$1, ..., k$] = Douglas-Peucker($C[1,...,index], \varepsilon$);<br>
-                            &emsp; rightPoints[$1, ..., m$] = Douglas-Peucker($C[index,...,n], \varepsilon$);<br>
+                            &emsp; leftPoints[$1, ..., k$] = Douglas-Peucker($C$[1,...,index], $\varepsilon$);<br>
+                            &emsp; rightPoints[$1, ..., m$] = Douglas-Peucker($C$[index,...,$n$], \varepsilon$);<br>
                             &emsp; <b>return</b> <b>CONCAT</b>(leftPoints, rightPoints); <br>
                             <b>Else</b>: <br>
                             &emsp; return $[C[1], C[n]]$; <br>
