@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+       </script>
+        <script src="https://kit.fontawesome.com/09b901828c.js" crossorigin="anonymous"></script>
+        <meta charset="UTF-8" />    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Hassan Nehme">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link
+			href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+			rel="stylesheet"
+		/>
+        <link rel="stylesheet" href="./style.css"/>
+        <title>Polyline simplification</title>
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-draw-polygon fa-2x" ></i>
+                <h4 class="logo">Approximation of polygonal chains</h4>
+            </div>
+            <nav>
+                <ui class="nav-links">
+                    <li><a class="nav-link" href="index.html">Home</a></li>
+                    <li><a class="nav-link" href="#">Imai and Iri</a></li>
+                    <li><a class="nav-link" href="chinAndChan.html">Chin and Chan</a></li> 
+                    <li><a class="nav-link" href="references.html">References</a></li>
+                </ui>
+            </nav>
+                <div>
+                    <button class="demo-btn" onclick="window.location.href='../applet/index.html';">Applet</button>
+                </div>
+        </header>
+
+        <main>
+            <section class="presentation">
+                <div class="Introduction">
+                    <div class="intro-text">
+                        <h1>Imai and Iri</h1>
+                        <br><br>
+                        <p align="justify">
+                            Imai and Iri (1988) described an algorithm that produces an $\varepsilon$-simplificaion with the minimum number of links.
+                            Generally we have two variants of the problem:
+                            <br><br>
+                            <b>Min-# problem:</b> Given a polygonal chain $C$ and a real number $\varepsilon$ ≥ 0, compute
+                            an $\varepsilon$-approximation of $C$ that uses the the smallest number of vertices among all
+                            $\varepsilon$-approximations of $C$. This is the one we mostly consider.
+                            <br><br>
+                            <b>Min-$\varepsilon$ problem:</b> : Given a polygonal chain $C$ and an integer $k$, compute an approximation of
+                            $C$ with at most $k$ vertices that minimizes the error over all approximations
+                            of $C$ that have at most $k$ vertices. Often uses binary search with min-# as a subroutine.
+                        </p>
+                        <br><br><br>
+                        <h2>The Algorithm</h2>
+                        <br><br>
+                        <p align="justify">
+                            Let $C$ be a polygonal chain $&ltp_1, p_2, ..., p_n&gt$ and let $\varepsilon$ > 0 be a given threshold. Assume that 
+                            we have a fixed distance function on the points in the plane. Imai and Iri formulated the problem in terms of 
+                            graph theory. We define an unweighted, directed graph $G_\varepsilon$ = $(V, E_\varepsilon)$, where V = $\{p_1, p_2, ..., p_n\}$
+                            and
+                            <br>
+                            \begin{equation}
+                                E_\varepsilon =  \{(p_i, p_j)\hspace{0.25cm}|\hspace{0.25cm}1 \leq i &lt j \leq n, \hspace{0.25cm} and \hspace{0.25cm} \Delta(p_i, p_j) \leq \varepsilon\}
+                            \end{equation}
+                            Therefore the graph $G_\varepsilon$ represents the subchains that can be simplified by a line-segment (shortcut). 
+                            An $\varepsilon$-approximation of $C$ corresponds to a path from $p_1$ to $p_n$ in $G_\varepsilon$, and an 
+                            $\varepsilon$-approximation with the minimum number of vertices corresponds to a shortest path from $p_1$ to $p_n$
+                            in $G_\varepsilon$. Using this approach naively, any algorithm for the min-# problem takes $\Omega(n^2)$-time, as it
+                            needs to construct the grpah $G_\varepsilon$, which can have $\Theta(n^2)$ edges and computing the shortest-path in 
+                            a directed asyclic graph (DAG) takes $\Omega(n^2)$-time.
+                        </p>
+                        <figure id="polylineExamples">    
+                            <img src="img/graphGeps.png" alt="Example" style="margin-left: auto; margin-right: auto; width:70%; height:30%; display: block;">
+                            <figcaption align="center"> <b>Figure 3:</b> &nbsp;&nbsp;&nbsp;A simple example of a graph $G_\varepsilon$</figcaption>
+                        </figure>
+                        <br>
+                        <h2>Building the graph $G_\varepsilon$</h2>
+                        <br><br>
+                        <h3>A brute force algorithm: </h3>
+                        <p>
+                            <b>Data:</b> Polygonal chain $C$ = $&ltp_1, p_2, ..., p_n&gt$ and a threshold $\varepsilon$. <br>
+                            <b>Result:</b> Graph $G_\varepsilon$. <br> 
+                            <b>For</b> each $vi \in \{p_i,..., p_n\}$ <b>do</b>: <br>
+                            &emsp; define $v_i$ as part of $G_\varepsilon$; <br>
+                            <b>For</b> each $v_i \in \{v_i,..., v_n\}$ <b>do</b>: <br>
+                            &emsp; <b>For</b> each $v_j \in \{v_{i+2},..., v_n\}$ <b>do</b>: <br>
+                            &emsp; Test for $k$ = $i+1, ...,j-1$ if <b>dist</b>$(v_k, v_iv_j)$ $\leq$ $\varepsilon$; <br>
+                            &emsp; if <b>TRUE</b> for all $k$, define $(v_i, v_j)$ as part of $G_\varepsilon$; <br>
+                            &emsp; <b>End</b>; <br>
+                            <b>End</b>;
+                            <br><br>
+                            This part of the whole algorithm runs in time $\mathcal{O}(n^3)$-time.
+                        </p>
+                        <br><br>
+                        <h2>Finding the shortest path using Dynammic programming</h2>
+                        <br>
+                        <ul>
+                            <ul style="font-size:22px">
+                                <li> Bring the corners into topological order.</li>
+                                <li> Solve the problem through dynammic programming: </li>
+                            </ul>
+                        </ul>
+                        <br><br>
+                        <p>
+                            Let $W$ denote the weight (length) of the edge $[i, j]$. <br>
+                            <b>Data:</b> A directed asyclic graph $G_\varepsilon$.<br>
+                            <b>Result:</b> The shortest path in $G_\varepsilon$. <br> 
+                            <b>dist</b>($v_1,v_1$) = $\infty$ ; <br>
+                            <b>For</b> $j$ = 2 to $n$ <b>do</b>: <br>
+                            &emsp; <b>dist</b>($v_1,v_j$) = $\infty$ <br>
+                            &emsp; <b>For</b> $(v_i, v_j) \in A$ <b>do</b>: <br>
+                            &emsp; &emsp; <b>if</b> dist</b>($v_1,v_i$) + $W(v_i, v_j)$ &lt dist</b>($v_1,v_j$) <b>then</b>: <br>
+                            &emsp; &emsp; &emsp; dist</b>($v_1, v_j$) = dist</b>($v_1, v_i$) + $W(v_i, v_j)$ <br>
+                            &emsp; &emsp; &emsp; predecessor($j$) = $i$ <br>
+                            &emsp; <b>End</b>; <br>
+                            <b>End</b>;
+                            <br><br>
+                            This other part of the algorithm runs in $\mathcal{O}(n^2)$-time. The running time of the whole 
+                            algorithm is therefore $\mathcal{O}(n^3).$
+                        </p>
+                        <br><br>
+                        <p>
+                            Using this approach to solve the min-# problem requires to compute a shortest path in a directed 
+                            asyclic graph; any algorithm used for this computation runs in $\Omega(n^2)$-time. The bottleneck
+                            in the proposed solution is therefore the construction of the graph $G_\varepsilon$. An improving
+                            algorithm can be found on the next page.             
+                        </p>
+                    </div>
+                </div>
+            </section> 
+        </main>
+    </body>
+</html>
+

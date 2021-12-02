@@ -1,0 +1,290 @@
+/**
+ * author: Hassan Nehme, studentID : 000436655
+ */
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+:root {
+  --deviation: 15%;
+  --biodeviation: 5%;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  height: 100%;
+  width: auto;
+}
+
+header {
+  display: flex;
+  width: 83%;
+  height: 15vh;
+  margin: auto;
+  align-items: center;
+}
+
+main {
+  margin-top: 10vh;
+}
+
+.logo-container,
+.nav-links,
+.demo-btn {
+  display: flex;
+}
+
+.logo-container {
+  flex: 1;
+}
+
+.logo {
+  font-weight: 600;
+  margin: 10px;
+}
+
+nav {
+  flex: 2;
+}
+
+.nav-links {
+  justify-content: space-around;
+  list-style: none;
+}
+
+.nav-link {
+  color: #5f5f79;
+  font-size: 70;
+  text-decoration: none;
+}
+
+.demo-btn {
+  outline: none;
+  display: block;
+  border: 0;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 20px 30px;
+  border-radius: 30px;
+  background: #24242c;
+  color: #167cc0;
+  cursor: pointer;
+  transition: all 0.2s linear;
+}
+.demo-btn:hover,
+.demo-btn:focus {
+  background: #005c99;
+}
+.demo-btn:active {
+  background: #003659;
+  color: #0081d5;
+}
+
+.presentation {
+  display: flex;
+  width: 90%;
+  margin: 5%;
+}
+
+.introduction {
+  flex: 1;
+}
+
+.intro-text h1 {
+  font-size: 44px;
+  font-weight: 500;
+  background: linear-gradient(to right, #262633, #6f6f89);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.intro-text p {
+  margin-top: 5px;
+  font-size: 22px;
+  color: #323246;
+}
+
+#GeoImages {
+  height: 500px;
+  position: relative;
+  display: flex;
+}
+
+#column1 {
+  margin-right: 10px;
+  width: 400px;
+  height: 300px;
+  position: absolute;
+  left: var(--deviation);
+  bottom: 75px;
+}
+
+#column1 figcaption {
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#column1 img {
+  width: 400px;
+  height: 300px;
+  bottom: 75px;
+  border: 5px solid #666;
+  border-radius: 10px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+#column2 figcaption {
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#column2 {
+  width: 400px;
+  height: 300px;
+  position: absolute;
+  right: var(--deviation);
+  bottom: 75px;
+}
+
+#column2 img {
+  width: 400px;
+  height: 300px;
+  bottom: 75px;
+  border: 5px solid #666;
+  border-radius: 10px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+}
+
+#BioImages {
+  height: 450px;
+  position: relative;
+}
+
+#Biocolumn1 {
+  margin-right: 10px;
+  width: 500px;
+  height: 300px;
+  position: absolute;
+  left: var(--biodeviation);
+  bottom: 75px;
+}
+
+#Biocolumn1 figcaption {
+  /*   font-family: cursive; */
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#Biocolumn1 img {
+  width: 500px;
+  height: 250px;
+  bottom: 75px;
+  border: 5px solid #666;
+  border-radius: 10px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+}
+
+#Biocolumn2 {
+  width: 500px;
+  height: 300px;
+  position: absolute;
+  right: var(--biodeviation);
+  bottom: 75px;
+}
+
+#Biocolumn2 figcaption {
+  /*   font-family: cursive; */
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#Biocolumn2 img {
+  width: 500px;
+  height: 250px;
+  bottom: 75px;
+  border: 5px solid #666;
+  border-radius: 10px;
+  -moz-border-radius: 25px;
+  -webkit-border-radius: 25px;
+}
+
+#hdorffEq {
+  width: 50%;
+  margin-left: 25%;
+}
+
+#hausdorffExample {
+  height: 450px;
+  position: relative;
+}
+
+#hausdorffExample1 {
+  margin-right: 10px;
+  width: 500px;
+  height: 300px;
+  position: absolute;
+  left: var(--biodeviation);
+  bottom: 75px;
+}
+
+#hausdorffExample1 figcaption {
+  /*   font-family: cursive; */
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#polylineExamples figcaption {
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#hausdorffExample1 img {
+  width: 500px;
+  height: 250px;
+  bottom: 75px;
+}
+
+#hausdorffExample2 {
+  width: 500px;
+  height: 300px;
+  position: absolute;
+  right: var(--biodeviation);
+  bottom: 75px;
+}
+
+#hausdorffExample2 figcaption {
+  font-size: larger;
+  margin-top: 30px;
+}
+
+#hausdorffExample2 img {
+  width: 500px;
+  height: 250px;
+  bottom: 75px;
+}
+
+.div-left {
+  margin-right: 30px;
+}
+
+.div-right {
+  marign-left: 25px;
+}
+
+.GeoImages::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#GeoImages div {
+  margin: 20px;
+}

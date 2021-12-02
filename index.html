@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+       </script>
+        
+        <script src="https://kit.fontawesome.com/09b901828c.js" crossorigin="anonymous"></script>
+        <meta charset="UTF-8" />    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Hassan Nehme">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        
+        <link
+			href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+			rel="stylesheet"
+		/>
+        <link rel="stylesheet" href="./style.css"/> 
+        <title>Polyline simplification</title>
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-draw-polygon fa-2x" ></i>
+                <h4 class="logo">Approximation of polygonal chains</h4>
+            </div>
+            <nav>
+                <ui class="nav-links">
+                    <li><a class="nav-link" href="#">Home</a></li>
+                    <li><a class="nav-link" href="ImaiAndIri.html">Imai and Iri</a></li>
+                    <li><a class="nav-link" href="chinAndChan.html">Chin and Chan</a></li> 
+                    <li><a class="nav-link" href="references.html">References</a></li>
+                </ui>
+            </nav>
+                <div>
+                    <button class="demo-btn" onclick="window.location.href='../applet/index.html';">Applet</button>
+                </div>
+        </header>
+
+        <main>
+            <section class="presentation">
+                <div class="Introduction">
+                    <div class="intro-text" id="introText">
+                        <h1>Polygonal chain </h1>
+                        <p align="justify">
+                            A polygonal chain in the euclidean plane is defined as an ordered list of vertices
+                            such that any two consecutive vertices are connected by a line segment.
+                            More formally, a polygonal chain P is a curve specified by a sequence of points 
+                            (${A_1}, {A_2},...,{A_n}$) called its vertices. A simple polygonal chain is one in which 
+                            every line segment is non self-intersecting. This is the type of polylines that we will be discussing.
+                            A polygonal chain can also be called a polygonal curve, polyline, piecewise linear curve and a broken line.
+                        </p>
+                        <figure id="polylineExamples">
+                            <img src="img/polylineExample.png" alt="Example" style="margin-left: auto; margin-right: auto; width:70%; display:block">
+                            <figcaption align="center">  <b>Figure 1:</b> &nbsp;&nbsp;&nbsp; A polyline is a continuous line composed of one or more line segments</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section> 
+ 
+            <section class="presentation">
+                <div class="Introduction">
+                    <div class="intro-text">
+                        <h1>The problem</h1>
+                        <p align="justify">
+                        Find $V' \subseteq V$, such that for all $S' = (v_i, v_j) \in V'$: 
+                        \begin{equation}
+                            d_{hdorff}(S, L) \leq \varepsilon
+                        \end{equation}
+                        where $L$ = $(v_i, v_{i+1}, ... , v_{j-1}, v_{j})$ is the line defined by the two points $v_i$ and $v_j$. <br><br>
+                        This problem is referred to as the <b>Min-#</b>problem (see next page).
+                        </p>
+                        <br><br>
+                        <h2>Hausdorff distance</h2>
+                        <br>
+                        <p align ="justify">
+                            $\require{\mathtools}$
+                            $d_{hdorff}$ denotes the Hausdorff distance which measures how far two subsets of a metric space are far from 
+                            each other. Informally, it is the greatest of all distances from a point in one set to the closest point in the
+                            other set. Formally, if $X$  and $Y$ are two non-empty subsets of a metric space with distance metric $d$, then 
+                            their Hausdorff distance $d_{hdorff}(X,Y)$ is defined to be: 
+                        </p>
+                        <br><br>
+                        <p align="justify", id="hdorffEq" >
+                            \begin{equation}
+                                d_{hdorrf}(X, Y) = \max\{\sup\limits_{x \in X} \inf\limits_{y \in Y}d(x,y), \sup\limits_{y \in Y} \inf\limits_{x \in X} d(x,y)\}
+                            \end{equation}
+                        </p> <br>
+                        <br><br>
+                        <div id="hausdorffExample">
+                            <figure id="hausdorffExample1">
+                                <img src="img/hdorffSetsBW.jpeg" alt="actual">
+                                <figcaption align="center">Hausdorff distance applied over closed curves</figcaption>
+                             </figure>
+                             <figure id="hausdorffExample2">
+                                 <img src="img/hausdorffPoints.png" alt="approximation">
+                                 <figcaption align="center">Hausdorff distance applied over sets of points</figcaption>
+                             </figure>
+                        </div>   
+                        <h1>Applications</h1>
+                        <p align="justify">
+                        The problem of approximating of a simple polygonal chain arises in many applications. Polylines are easy to specify
+                        and represent and a variety of curves in the plane can be approximated by a polygonal curve. 
+                        <br><br>
+                        <h2>Geographic information systems (GIS)</h2>
+                        <p align="justify">
+                        Polyline simplification plays and important role in cartographic generalization because most map features are represented
+                        by polylines and polygons composed of polylines. This simplification reduces  unnecessary detauls, makes the map more legible 
+                        and clear. It also improves efficiency and cartographic visualizations.
+                        </p>
+                        <div id="GeoImages">
+                               <figure id="column1">
+                                   <img src="img/map_1.png" alt="actual">
+                                   <figcaption align="center">Before simplification</figcaption>
+                                </figure>
+                                <figure id="column2">
+                                    <img src="img/map_2.png" alt="approximation">
+                                    <figcaption align="center">After simplification using DP algorithm (Mark de Berg, et al, 1998)</figcaption>
+                                </figure>
+                        </div>
+                        <h2>Biomedical systems</h2>
+                        <p align="justify">
+                        Polygonal chain approximation can also be found in biomedical applications. An example is the human motion analysis and synthesis.
+                        A model based on specification for a standard humanoid can be used to visualize captured motion data of a human subject, where 
+                        motion in orientation can be considered as trajectory curves in a 4+1 dimensional space; 4 dimensions specify the orientations of joints 
+                        and an additionnal dimension for time. Running a simplification algorithm to motion curves reduces the motion data without degrading the visual quality.
+                        </p>
+                        <div id="BioImages">
+                            <figure id="Biocolumn1">
+                                <img src="img/humanoid1.png" alt="actual">
+                                <figcaption align="center">Before simplification</figcaption>
+                             </figure>
+                             <figure id="Biocolumn2">
+                                 <img src="img/humanoid2.png" alt="approximation">
+                                 <figcaption align="center">After simplification</figcaption>
+                             </figure>
+                        </div>
+                        <h2>Discretization</h2>
+                        <p align="justify">
+                            Discretization is the process of transferring continous values into discrete values. It is an essential
+                            preproccessing step for several machine learning and data mining algorithms and its quality can dramatically
+                            affect the performance of these algorithms. Polyline approximation can be used to apply such a discretization. 
+                            In 2019, Alev Mutlu, Furkan Göz and Orhan Akbulut showed how the Douglas-Peucker algorithm (see below) can be used to 
+                            solve a discretization problem, namely line fitting-based discretization (lFIT). It is a static, univariate, 
+                            unsupervised, splittingbased, global, and incremental discretization method where intervals are determined 
+                            based on the Ramer–Douglas–Peucker algorithm. The quality of partitionning  is assessed 
+                            based on the standard error of the estimate. Their solution achieved higher predictive accuracy and 
+                            produces less number of inconsistency while it generates larger number of intervals.
+                        </p> <br>             
+                        <h1>Previous Work</h1>
+                        <p align="justify">
+                            The problem of approximating a polygonal curve by a coarser one is of fundamental importance and has been 
+                            studied in many disciplines. Here, we are interested in finding an approximating chain where the  vertices
+                            are restricted to be part of the input chain. <br><br>
+                            One of the oldest and most notable line simplification algorithms is the Douglas-Peucker 
+                            algorithm. Invented in 1970 for reducing the number of points required to represent a digitized line or its caricature 
+                            in the context of computer graphics and image processing. It is a heuristical approach that computes an approxmation within
+                            a specified error $\varepsilon$. The algorithm simple, it starts by approximating the subchain $P_1^{n}$ by the line
+                            segment $P_1P_n$. If the distance of the farthest vertex $P_k$ from $P_1P_n$ is greater than the tolerance threshold, we 
+                            recursively approximate the two polygonal chains $P_1P_k$ and $P_kP_n$. It has been shown that this algorithm can be implemented 
+                            in $\mathcal{O}({nlog(n)^*})$-time, where $log(n)^*$ is the iterated logarithm function. <br><br>
+                            Imai and Iri showed that this category of problems can be solved by 
+                            formulating them using graph theory, the algorithm that they proposed can be implemented in $\Omega(n^2)$-time.
+                            Chan and Chin, Melkman and O'Rourke and Toussaint proposed algorithms of similar flavor that run in $\Omega(n^2)$-time.  
+                            Here, we will discuss in details how to implement Imai and Iri's algorithm and the improvement proposed by Chan and Chin.
+                        </p>
+                        <br><br>
+                        <figure id="polylineExamples">
+                            <img src="img/polyChainClean.png" alt="Example" style="margin-left: auto; margin-right: auto; width:60%; height:50%; display: block;">
+                            <figcaption align="center"><b>Figure 2:</b> &nbsp;&nbsp;&nbsp; A simple example of a polyline simplification</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
+

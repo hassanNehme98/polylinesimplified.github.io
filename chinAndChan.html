@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+        </script>
+        <script type="text/javascript"
+            src="http://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+       </script>
+        <script src="https://kit.fontawesome.com/09b901828c.js" crossorigin="anonymous"></script>
+        <meta charset="UTF-8" />    
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="author" content="Hassan Nehme">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <link
+			href="https://fonts.googleapis.com/css?family=Poppins:400,500&display=swap"
+			rel="stylesheet"
+		/>
+        <link rel="stylesheet" href="./style.css"/>
+        <title>Polyline simplification</title>
+    </head>
+    <body>
+        <header>
+            <div class="logo-container">
+                <i class="fas fa-draw-polygon fa-2x" ></i>
+                <h4 class="logo">Approximation of polygonal chains</h4>
+            </div>
+            <nav>
+                <ui class="nav-links">
+                    <li><a class="nav-link" href="index.html">Home</a></li>
+                    <li><a class="nav-link" href="ImaiAndIri.html">Imai and Iri</a></li>
+                    <li><a class="nav-link" href="#">Chin and Chan</a></li> 
+                    <li><a class="nav-link" href="references.html">References</a></li>
+                </ui>
+            </nav>
+                <div>
+                    <button class="demo-btn" onclick="window.location.href='../applet/index.html';">Applet</button>
+                </div>
+        </header>
+
+        <main>
+            <section class="presentation">
+                <div class="Introduction">
+                    <div class="intro-text">
+                        <h1>Chin and Chan</h1>
+                        <br><br>
+                        <p align="justify">
+                            In March 1993, W.S Chan and F. Chin proposed different algorithms for solving the polygonal chain 
+                            approximation formulated by Imai and Iri. We have discussed on the previous page that the critical part 
+                            of the first algorithm is the construction of the $G_\varepsilon$ graph. It has been proved 
+                            that this construction can be improved from $\mathcal{O}(n^3)$ to $\mathcal{O}(n^2\log(n))$. <br>
+                            The two authors proposed an algorithm that improved significantly the running-time to $\mathcal{O}(n^2)$
+                            by applying a clever approach to tackle the problem of constructing the graph $G_\varepsilon$.
+                            They also showed that if the curve to be approximated forms part of a convex polygon then the two problems, 
+                            namely <b>Min-#</b> and <b>Min-$\varepsilon$</b> problems can be solved in $\mathcal{O}(n)$ and 
+                            $\mathcal{O}(n^2)$ respectively for both open and closed polylines.
+                        </p>
+                        <br><br><br>
+                        <h2>Redefining the problem</h2> <br><br>
+                        <p align="justify">
+                            Let $P$ = $(p_0, p_1,..., p_{n-1})$ be a piecewise linear curve or polygonal curve, i.e, $p_0, p_1,..., p_{n-1}$ 
+                            is a sequence of points on a plane and each pair of points $p_i$ and $p_{i+1}$, $i=0, 1,...,n-2$ are joined 
+                            by a line segment. The distance $d(\overline{p_rp_s}, p_k)$ between a line segment $\overline{prps}$ and a point $p_k$ 
+                            is defined to be the minimum distance from $p_k$ to that line segment: 
+                            $d(\overline{p_rp_s}, p_k)$ = $\min\limits_{x \hspace{0.1em} \in \hspace{0.1em} \overline{p_rp_s}}{d(x,p_k)}$. <br>
+                            The error of a line segment can be defined by 
+                            $e\hspace{0.1em}(\hspace{0.15em}\overline{p_rp_s}\hspace{0.15em})$ = $\max\limits_{p \leq k \leq s}{d(\hspace{0.15em}\overline{p_rp_s},p_k)}$.
+                            <br>
+                            The error of an approximate curve $P'$ is defined as the maximum error of each line segment in $P'$, i.e, 
+                            $e\hspace{0.1em}(P')$ = $\max\limits_{0 \leq k \leq m}{e\hspace{0.1em}(\overline{p_{ik}p_{ik+1}})}$. We say that the error 
+                            of $P'$ is within $\varepsilon$ if $e\hspace{0.1em}(P') \leq \varepsilon$. <br>
+                            Again, we are interested in solving the <b>Min-#</b> problem.
+                        </p><br><br>
+                        <h2>General conditions</h2> <br><br>
+                        <p>
+                            Some conditions are necessary for $d(\hspace{0.15em}\overline{p_rp_s},p_k)$, $p_r \neq p_s$, $r &lt; k  &lt; s \leq \varepsilon$ to be satisfied:
+                        </p>
+                        <br><br> 
+                        <ul>
+                            <ul style="font-size:22px">
+                                <li> 
+                                    <b>Condition A:</b> $\hspace{0.2em} d(\hspace{0.15em}\overleftrightarrow{p_rp_s},p_k) \leq \varepsilon$ where $\overleftrightarrow{p_rp_s}$
+                                    denotes the infinite line extending at both ends.
+                                </li><br>
+                                <li>
+                                    <b>Condition B: </b> $\hspace{0.1em}$ If $\angle p_kp_rp_s > \pi / 2, \hspace{0.3em}d(p_k, p_r) \leq \varepsilon$, where $\angle p_kp_rp_s$ denotes 
+                                    the convex angle between line segments $\overline{p_kp_r}$ and $\overline{p_rp_s}$.
+                                </li><br>
+                                <li>
+                                    <b>Condition C: </b> $\hspace{0.1em}$ If $\angle p_kp_sp_r > \pi / 2, \hspace{0.3em}d(p_k, p_s) \leq \varepsilon$.
+                                </li>
+                            </ul>
+                        </ul><br>
+                        <p>
+                            Condition A is trivial. Condition B and C ensure that if $p_k$ lies outside the "range" of $\overline{p_rp_s}$, then $p_k$ cannot be
+                            "too far away" from either $p_r$ or $p_s$. If these three conditions are satisified, it is guaranteed that
+                            the condition $d(\hspace{0.15em}\overline{p_rp_s},p_k) \leq \varepsilon$ is also satisified. 
+                        </p><br>
+                        <h2>Construction of the graph $G_\varepsilon$</h2><br>
+                        <p>
+                            $G_\varepsilon$ = $(V, E)$ is basically constructed in two phases, in which $G'=(V, E')$ and $G''=(V, E'')$ are formed.
+                            The three graphs have the same set of vertices, namely $V$. We show that $E = E' \cap E''$. The graph $G'$ is a graph
+                            generated based on conditions $A$ and $B$, while the graph $G''$ on conditions $A$ and $C$. <br><br>
+                            Let $\overrightarrow{p_rp_s}$ denote the ray emanating from $p_r$ and passing through $p_s$.
+                             If $p_r=p_s$, let $\overrightarrow{p_rp_s}=p_r$. <br><br> $(v_r, v_s) \in E'$ if and only if $r &lt; s$ and 
+                            $\forall k, r \leq k \leq s$, we have $d(\hspace{0.15em}\overrightarrow{p_rp_s},p_k) \leq \varepsilon$. 
+                            Similarly, $(v_r, v_s) \in E''$ if and only if $r &lt; s$, and $\forall k, r \leq k \leq s$, we have 
+                            $d(\hspace{0.15em}\overrightarrow{p_sp_r},p_k) \leq \varepsilon$. Therefore the condition 
+                            $d(\hspace{0.15em}\overline{p_rp_s},p_k) \leq \varepsilon$ holds if and only if both conditions, 
+                            $d(\hspace{0.15em}\overrightarrow{p_sp_r},p_k) \leq \varepsilon$ and 
+                            $d(\hspace{0.15em}\overrightarrow{p_rp_s},p_k) \leq \varepsilon$ are satisified. Similarly, 
+                            $E \subseteq E', E \subseteq E''$, and $E = E' \cap E''$. Hence, instead of constructing $E$ directly it can 
+                            be generated from $E'$ and $E''$.
+                        </p><br><br>
+                        <h2>Construction of $E'$ and $E''$</h2><br>
+                        <p>
+                            Let $v_r$ denote a particular vertx in $V$. We want to determine whether $(v_r, v_s) \in E'$ for some 
+                            $s$ with $r &lt; s$. Let $r &lt; k &lt; s$. If $d(p_r, pk) > \varepsilon$, let a_{r,k} and b_{r,k} denote the 
+                            two rays emanating from $p_r$, one at each side of $p_k$ and at a distance $\varepsilon$ from $p_k$, i.e, 
+                            $d(a_{r,k},p_k)=d(b_{r,k}, p_k)$=$\varepsilon$, and finally, let $D_{r,k}$ be the convex region bounded 
+                            by $a_{rk}$ and $b_{rk}$ excluding point $p_r$. If $d(p_r, p_k) \leq \varepsilon$, then $D_{r,k}$ refers to the whole plane. <br><br>
+
+                            <b>First observation: </b> $\hspace{0.15em}$For $r &lt; k &lt; s, p_s \in D_{r,k}$ if and only if 
+                            $d(\hspace{0.15em}\overline{p_rp_s},p_k) \leq \varepsilon$. <br>
+                            Informally, this means that if $(v_r, v_s)$ is a valid shortcut, then the ray emanating from $p_r$ to $p_s$, 
+                            $\overrightarrow{p_rp_s}$ must stab the circle centered around $k$ and with radius $\varepsilon$.
+                            In order to determine whether $(v_r, v_s) \in E'$, it is necessary and sufficient to check $p_s \in D_{r,k}$, 
+                            $\forall r &lt; k &lt; s$. Define $W_{rs}$ = $\bigcap_{r \leq k &lt; s}D_{rk}$ for $r &lt; s$. <br><br>    
+                        <br>
+                        </p>
+                        <figure id="polylineExamples">    
+                            <img src="img/cones.png" alt="Example" style="margin-left: auto; margin-right: auto; width:60%; height:30%; display: block;">
+                            <figcaption align="center"> <b>Figure 4:</b> &nbsp;&nbsp;&nbsp;The rays emanating from one vertex to the other must touch all intermediate circles</figcaption>
+                        </figure>
+                        <br>
+                        <p>
+                            <b>Second observation: </b> $\hspace{0.15em}$ Assume $r &lt; s$. $(v_r, v_s) \in E'$ if and only if $p_s \in W_{r,s}$.<br>
+                            Informally, this means that for $(v_r, v_s)$ to be a valid shortcut, the ray emanating from $p_r$ to $p_s$, &nbsp;
+                            $\overrightarrow{p_rp_s}$ must stab all the intermediate circles defined on each point $k$ in between $r$ and $s$.
+                        </p>
+                        <figure id="polylineExamples">    
+                            <img src="img/wedges.png" alt="Example" style="margin-left: auto; margin-right: auto; width:40%; height:30%; display: block;">
+                            <figcaption align="center"> <b>Figure 5:</b> &nbsp;&nbsp;&nbsp;When the wedge becomes an empty set, the current iteration stops</figcaption>
+                        </figure>
+                        <br>
+                        <p>
+                            We are able to determine whether $(v_r, v_s) \in E'$ by testing whether $p_s \in W_{r,s}$. For any vertex 
+                            $r$, the algorithm would consider all pairs of vertices $(v_r, v_s)$ with $s$ ranging from $r+1$ to 
+                            $n$. The main part of the procedure is to determine whether a point is in $W_{r,s}$ and to update $W_{r,s}$ from 
+                            $W_{r,s-1}$ efficiently. Since $W_{rs}$ is defined by $\bigcap_{r \leq k &lt; s}D_{r,k}$, the $D_{r,k}'s$ and the 
+                            $W_{r,s}$ are either the whole plane or a cone-shaped region bounded by the two rays emanating from $p_r$. As 
+                            long as we can keep track of these two rays of $W_{r,s}$, we can check easily check whether $p_s \in W_{r,s}$
+                            and update $W_{r,s}$ in constant-time. <br><br>
+
+                            <b>1</b> &nbsp;&nbsp;Checking whether $p_s \in W_{rs}$ is equivalent to checking whether $p_s$ lies within two rays, this can be done 
+                            in constant time. <br><br>
+
+                            <b>2</b> &nbsp;&nbsp;$W_{rs}$ is updated by: $W_{r,s} \leftarrow W_{r,s-1} \cap D_{r,s-1}$ <br><br>
+
+                            If $W_{r,s} = \varnothing$, we conclude that $(v_r, v_k) \notin E'$, &nbsp;, $\forall k \geq s$ and the iteration of the 
+                            algorithm on vertex $r$ stops. Therefore, we can determine all edges in $E'$ incident from $v_r$ in $\mathcal{O}(n)$-time and 
+                            all edges in $E'$ in $\mathcal{O}(n^2)$-time. <br><br>
+
+                            <b>Theorem</b> &nbsp;&nbsp; $G_\varepsilon$ = $G(V, E)$ can be constructed in $\mathcal{O}(n^2)$-time. <br><br>
+
+                            <b>Proof</b> As both $E'$ and $E''$ can be constructed in $\mathcal{O}(n^2)$-time, and $E=E' \cap E''$ can be generated 
+                            with another $n^2$ operations, $G_\varepsilon$ can be constructed in $\mathcal{O}(n^2)$-time. <br><br>
+
+                            <b>Procedure e</b><br>
+                            <b>Data</b>: Polygonal chain $C$ = $&ltp_1, p_2, ..., p_n&gt$ and a threshold $\varepsilon$.</b> <br>
+                            <b>Result:</b> Line segments in $E'$ or $E''$. <br>
+                            <b>For</b> $r$ = 0 to $n-2$ <b>do</b>: <br>
+                            &emsp; $s=r+1$; <br>
+                            &emsp; $W$ = the whole plane; <br>
+                            &emsp; While $W \neq \varnothing$ and $s &lt; n$ <b>do</b>: <br>
+                            &emsp; &emsp; if $p_s \in W$ then output $(v_r, v_s) \in E'$; <br>
+                            &emsp; &emsp; $W$ = $W \cap D_{r,s}$; <br>
+                            &emsp; &emsp; $s$ = $s+1$; <br>
+                            &emsp; <b>End</b>; <br>
+                            <b>End</b>;
+                            <br><br>
+
+                            <b>Algorithm</b> <br>
+                            <b>Data</b>: Polygonal chain $C$ = $&ltp_1, p_2, ..., p_n&gt$ and a threshold $\varepsilon$</b>
+                            <b>Result:</b> The set $E$ of $G_\varepsilon$. <br>
+                            Call procedure $e$ to compute $E'$;<br>
+                            Call procedure $e$ to compute $E''$;<br>
+                            Output $E = E' \cap E''$; <br><br>
+
+                            Once the graph $G_\varepsilon$ is constructed, a shortest path algorithm on a directed asyclic graph 
+                            is used to compute the approximated polyline $P'$. See the previous page for a dynammic programming approach
+                            to solve that problem in $\mathcal{O}(n^2)$.
+                         </p>
+                    </div>
+                </div>
+            </section> 
+        </main>
+    </body>
+</html>
+

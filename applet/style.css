@@ -1,0 +1,13 @@
+/**
+ * author: Hassan Nehme, studentID : 000436655
+ */
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+canvas {
+  display: block;
+}
