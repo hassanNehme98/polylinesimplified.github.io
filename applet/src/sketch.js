@@ -13,7 +13,6 @@ in another color. A built-in polyline is available and can also be approximated.
 *-----------------------------------------------------------------------------------------------------/
 
 /* eslint-disable no-undef, no-unused-vars */
-
 //A point has is defined by its x and y components.
 class Point {
   constructor(x, y) {
@@ -24,7 +23,7 @@ class Point {
 //Points contains all the points of the sketch.
 var points = [];
 //A polyline which is available for the user.
-builtInPolyline = false;
+builtInPolyline = undefined;
 //Approximated polyline
 approximation = undefined;
 //Creator is an instance of the utils class.
@@ -128,7 +127,6 @@ function draw() {
   strokeWeight(4);
   if (points) creator.simplePolyline(points, [100, 0, 200]);
   if (points.length > 1 || builtInPolyline) approximate.removeAttribute("disabled");
-
   if (approximation) {
     creator.simplePolyline(approximation, [255, 255, 255]);
     stroke(0, 0, 0);

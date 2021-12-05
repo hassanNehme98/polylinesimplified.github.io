@@ -55,9 +55,9 @@ class polylineSimplifier {
    * @returns The distance between p1 and the line segment p2p3.
    */
   getDist(p1, p2, p3) {
-    const m = (p3.y - p2.y) / (p3.x - p2.x);
-    const b = p3.y - m * p3.x;
-    return Math.abs(-m * p1.x + p1.y - b) / Math.sqrt(m * m + 1);
+    const num = Math.abs((p3.x - p2.x) * (p2.y - p1.y) - (p2.x - p1.x) * (p3.y - p2.y));
+    const den = Math.sqrt(Math.pow(p3.x - p2.x, 2) + Math.pow(p3.y - p2.y, 2));
+    return num / den;
   }
 
   /**
@@ -77,6 +77,7 @@ class polylineSimplifier {
         for (let k = i + 1; k < j; ++k) {
           if (this.getDist(polyline[k], polyline[i], polyline[j]) > epsilon) {
             possibleApprox = false;
+            break;
           }
         }
         if (possibleApprox) {
