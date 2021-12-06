@@ -28,6 +28,12 @@ builtInPolyline = undefined;
 approximation = undefined;
 //Creator is an instance of the utils class.
 let creator = undefined;
+//An object of the class polylineSimplifier to compute the approximation.
+let solver = undefined;
+//ShowGraph is used to know when to show the Imai and Iri's graph to the user.
+let showGraph = false;
+//polylineCreator is used to provide the user with available polylines.
+let polyDrawer = undefined;
 
 /**
  * Adds CSS to a button.
@@ -52,6 +58,7 @@ function styleButton(button, color = "black", ypad = 0.8) {
  */
 function resetpoints() {
   points = [];
+  showGraph = undefined;
   polygonCompleted = false;
   builtInPolyline = false;
   approximation = undefined;
@@ -66,7 +73,8 @@ function resetpoints() {
  * and links them to their on-click methods.
  */
 function setup() {
-  let solver = new polylineSimplifier();
+  solver = new polylineSimplifier();
+  polyDrawer = new polylineBuilder();
   creator = new utils();
   createCanvas(windowWidth, windowHeight);
   textSize(40);
@@ -80,18 +88,20 @@ function setup() {
   approximate = createButton("Imai and Iri's approximation");
   approximate.position(200, 85);
   approximate.mousePressed(function getApproximation() {
+    showGraph = false;
     const polyChain = builtInPolyline ? builtInPolyline : points;
     approximation = solver.computeApproximation(polyChain);
   });
   approximate.attribute("disabled", "");
-  styleButton(approximate, "black");
+  styleButton(approximate);
 
-  buttonBuiltIn = createButton("Built-in polyline");
-  buttonBuiltIn.position(500, 85);
-  buttonBuiltIn.mousePressed(function decreasingExp() {
-    builtInPolyline = solver.createBuiltIn();
+  buttonBuiltIn = createButton("Random Polyline");
+  buttonBuiltIn.position(470, 85);
+  buttonBuiltIn.mousePressed(function availablePoly() {
+    resetpoints();
+    builtInPolyline = polyDrawer.chooseRandFunc();
   });
-  styleButton(buttonBuiltIn, "black");
+  styleButton(buttonBuiltIn, "orange");
 
   input = createInput();
   input.position(1120, 50);
@@ -102,6 +112,23 @@ function setup() {
     solver.setDefaultEps(input.value());
   });
   styleButton(submission, "green", 0.09);
+
+  visualGraph = createButton("Visualize Graph");
+  visualGraph.position(650, 85);
+  visualGraph.mousePressed(function getGraph() {
+    approximation = undefined;
+    showGraph = true;
+  });
+  visualGraph.attribute("disabled", "");
+  styleButton(visualGraph, "purple");
+
+  selfIntersecting = createButton("Self-Intersecting curve");
+  selfIntersecting.position(820, 85);
+  selfIntersecting.mousePressed(function selfIntersection() {
+    resetpoints();
+    builtInPolyline = polyDrawer.intersectingCurves();
+  });
+  styleButton(selfIntersecting, "red");
 }
 
 /**
@@ -126,8 +153,15 @@ function draw() {
   }
   strokeWeight(4);
   if (points) creator.simplePolyline(points, [100, 0, 200]);
-  if (points.length > 1 || builtInPolyline) approximate.removeAttribute("disabled");
-  if (approximation) {
+  if (points && points.length > 1) {
+    visualGraph.removeAttribute("disabled");
+  }
+  if ((points && points.length > 1) || builtInPolyline) {
+    approximate.removeAttribute("disabled");
+  }
+  if (showGraph) {
+    solver.showGraph(points);
+  } else if (approximation) {
     creator.simplePolyline(approximation, [255, 255, 255]);
     stroke(0, 0, 0);
     textSize(15);

@@ -4,6 +4,7 @@
 
 class polylineSimplifier {
   #defaultEps;
+  #IIgraph;
   /**
    * The constructor initializes a default value of the error bound to 20.
    */
@@ -20,20 +21,19 @@ class polylineSimplifier {
   }
 
   /**
-   * Creates a polyline which is available for the user to use
-   * instead of drawing their own polyline.
-   * The curve is given by the function f(x) = e(-x)cos(2PIx).
-   * @returns The curve as a list of connected points.
+   * Draws the graph on the screen.
+   * @param {Object} polyline The array of points defining the polygonal chain.
    */
-  createBuiltIn() {
-    let curvePoints = [];
-    for (let x = 0; x < windowWidth; ++x) {
-      const xval = map(x, 0, windowWidth, 0, 5);
-      const yval = exp(-xval) * cos(TWO_PI * xval);
-      const y = map(yval, -1, 1, windowHeight, 0);
-      curvePoints.push(new Point(x, y + 148));
-    }
-    return curvePoints;
+  showGraph(polyline) {
+    console.log("okkkazeza");
+    this.createGraph(this.#defaultEps, polyline);
+    stroke(255, 0, 0);
+    for (let i = 0; i < this.#IIgraph.length; ++i)
+      for (let j = 0; j < this.#IIgraph.length; ++j) {
+        if (this.#IIgraph[i][j] != 0 && this.#IIgraph[i][j] != -1) {
+          line(points[i].x, points[i].y, points[j].x, points[j].y);
+        }
+      }
   }
 
   /**
@@ -67,11 +67,11 @@ class polylineSimplifier {
    * @returns The graph G as a two dimentionnal array.
    */
   createGraph(epsilon, polyline) {
-    let graph = this.initializeGraph(polyline);
+    this.#IIgraph = this.initializeGraph(polyline);
     for (let i = 0; i < polyline.length - 1; ++i) {
-      graph[i][i] = 0;
-      graph[i][i + 1] = 1;
-      graph[i + 1][i] = -1;
+      this.#IIgraph[i][i] = 0;
+      this.#IIgraph[i][i + 1] = 1;
+      this.#IIgraph[i + 1][i] = -1;
       for (let j = i + 2; j < polyline.length; ++j) {
         let possibleApprox = true;
         for (let k = i + 1; k < j; ++k) {
@@ -81,12 +81,11 @@ class polylineSimplifier {
           }
         }
         if (possibleApprox) {
-          graph[i][j] = 1;
-          graph[j][i] = -1;
+          this.#IIgraph[i][j] = 1;
+          this.#IIgraph[j][i] = -1;
         }
       }
     }
-    return graph;
   }
 
   /**
@@ -110,11 +109,11 @@ class polylineSimplifier {
   /**
    * Computes the shortest path in the graph G using dynammic programing.
    * This is possible since the graph G is a DAG (Directed asyclic graph).
-   * @param {Object} IIgraph The graph G.
+   * @param {Object} this.IIgraph The graph G.
    * @returns The shortest path from p1 to pn.
    */
-  computeShortestPath(IIgraph) {
-    const n = IIgraph.length;
+  computeShortestPath() {
+    const n = this.#IIgraph.length;
     let dp = [];
     let shortcut = [];
     for (let i = 0; i < n; ++i) {
@@ -123,7 +122,7 @@ class polylineSimplifier {
     dp[n - 1] = 0;
     for (let i = n - 2; i >= 0; --i) {
       for (let j = 0; j < n; ++j) {
-        const weight = IIgraph[i][j];
+        const weight = this.#IIgraph[i][j];
         if (weight > 0) {
           if (dp[i] > weight + dp[j]) {
             dp[i] = weight + dp[j];
@@ -142,8 +141,8 @@ class polylineSimplifier {
    * @returns The approximated polyline P'.
    */
   computeApproximation(polyline, epsilon = this.#defaultEps) {
-    const IIgraph = this.createGraph(epsilon, polyline);
-    const shortestPath = this.computeShortestPath(IIgraph);
+    this.createGraph(epsilon, polyline);
+    const shortestPath = this.computeShortestPath();
     const approximation = this.getApproximation(polyline, shortestPath);
     return approximation;
   }
