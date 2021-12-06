@@ -65,6 +65,7 @@ function resetpoints() {
 
   buttonBuiltIn.removeAttribute("disabled");
   approximate.attribute("disabled", "");
+  visualGraph.attribute("disabled", "");
 }
 
 /**

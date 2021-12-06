@@ -1,12 +1,19 @@
 /**
- * Creates a polyline which is available for the user to use
- * instead of drawing their own polyline.
+ *
+ * @author Hassan Nehme, studentID : 000436655
+ * Class used to create polylines which are available for the user.
+ * Can be directly used instead of drawing a polyline.
  */
 class polylineBuilder {
   constructor() {}
 
-  getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+  /**
+   * Provides a random number from a set of values.
+   * @param {Number} nbVals The number of values.
+   * @returns A random integer in the range [0, nbVals - 1]
+   */
+  getRandomInt(nbVals) {
+    return Math.floor(Math.random() * nbVals);
   }
 
   /**
@@ -24,6 +31,10 @@ class polylineBuilder {
     return curvePoints;
   }
 
+  /**
+   * The curve is given by the function f(x) = sin(x).
+   * @returns The curve as a list of connected points.
+   */
   sinusShaped() {
     let curvePoints = [];
     for (let x = 0; x < windowWidth; x = x + 2) {
@@ -35,6 +46,10 @@ class polylineBuilder {
     return curvePoints;
   }
 
+  /**
+   * The curve is given by the function f(x) = sin(x)/x.
+   * @returns The curve as a list of connected points.
+   */
   gaussianShaped() {
     let curvePoints = [];
     for (let x = 0; x < windowWidth; x++) {
@@ -48,6 +63,10 @@ class polylineBuilder {
     return curvePoints;
   }
 
+  /**
+   * Calls one of the functions above to provide a polyline at random.
+   * @returns A polyline at random.
+   */
   chooseRandFunc() {
     let r = this.getRandomInt(3);
     console.log(r);
@@ -61,6 +80,12 @@ class polylineBuilder {
     }
   }
 
+  /**
+   * Returns a selve intersecting curves. The algorithm
+   * proposed is NOT designed to deal with this type of curves.
+   * But it is interesting to visualize the result nevertherless.
+   * @returns A self intersecting curve.
+   */
   intersectingCurves() {
     let curvePoints = [];
     for (let t = 0; t < windowWidth; t++) {

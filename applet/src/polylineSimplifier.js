@@ -1,5 +1,7 @@
 /**
  * @author Hassan Nehme, studentID : 000436655
+ * Class used to approximate a polyline by applying the algorithm
+ * proposed by Imai and Iri.
  */
 
 class polylineSimplifier {

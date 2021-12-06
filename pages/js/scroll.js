@@ -1,3 +1,7 @@
+/**
+ * This script is used by almost all the pages.
+ * It provides the "scroll back to top" mechanism.
+ */
 $(window).scroll(function () {
   if ($(this).scrollTop() >= 50) {
     $("#return-to-top").fadeIn(200);

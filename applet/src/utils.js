@@ -1,5 +1,7 @@
 /**
  * @author Hassan Nehme, studentID : 000436655
+ * Class used to provide all the necessary tools
+ * to draw a polyline.
  */
 
 class utils {
