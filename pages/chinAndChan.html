@@ -42,16 +42,16 @@
 
         <main>
             <section class="presentation">
-                <div class="Introduction">
-                    <div class="intro-text">
+                <div class="main-texts">
+                    <div class="explanation">
                         <h1>Chin and Chan</h1>
                         <br><br>
                         <p align="justify">
                             In March 1993, W.S Chan and F. Chin proposed different algorithms for solving the polygonal chain 
                             approximation formulated by Imai and Iri. We have discussed on the previous page that the critical part 
-                            of the first algorithm is the construction of the $G_\varepsilon$ graph. It has been proved 
+                            of the first algorithm is the construction of the $G_\varepsilon$ graph. It has been proved by the two authors
                             that this construction can be improved from $\mathcal{O}(n^3)$ to $\mathcal{O}(n^2\log(n))$. <br>
-                            The two authors proposed an algorithm that improved significantly the running-time to $\mathcal{O}(n^2)$
+                            Chan and Chin proposed an algorithm that improved significantly the running-time to $\mathcal{O}(n^2)$
                             by applying a clever approach to tackle the problem of constructing the graph $G_\varepsilon$.
                             They also showed that if the curve to be approximated forms part of a convex polygon then the two problems, 
                             namely <b>Min-#</b> and <b>Min-$\varepsilon$</b> problems can be solved in $\mathcal{O}(n)$ and 
@@ -62,7 +62,7 @@
                         <p align="justify">
                             Let $P$ = $(p_0, p_1,..., p_{n-1})$ be a piecewise linear curve or polygonal curve, i.e, $p_0, p_1,..., p_{n-1}$ 
                             is a sequence of points on a plane and each pair of points $p_i$ and $p_{i+1}$, $i=0, 1,...,n-2$ are joined 
-                            by a line segment. The distance $d(\overline{p_rp_s}, p_k)$ between a line segment $\overline{prps}$ and a point $p_k$ 
+                            by a line segment. The distance $d(\overline{p_rp_s}, p_k)$ between a line segment $\overline{p_rp_s}$ and a point $p_k$ 
                             is defined to be the minimum distance from $p_k$ to that line segment: 
                             $d(\overline{p_rp_s}, p_k)$ = $\min\limits_{x \hspace{0.1em} \in \hspace{0.1em} \overline{p_rp_s}}{d(x,p_k)}$. <br>
                             The error of a line segment can be defined by 
@@ -117,7 +117,7 @@
                         <h2>Construction of $E'$ and $E''$</h2><br>
                         <p>
                             Let $v_r$ denote a particular vertx in $V$. We want to determine whether $(v_r, v_s) \in E'$ for some 
-                            $s$ with $r &lt; s$. Let $r &lt; k &lt; s$. If $d(p_r, pk) > \varepsilon$, let a_{r,k} and b_{r,k} denote the 
+                            $s$ with $r &lt; s$. Let $r &lt; k &lt; s$. If $d(p_r, p_k) > \varepsilon$, let $a_{r,k}$ and $b_{r,k}$ denote the 
                             two rays emanating from $p_r$, one at each side of $p_k$ and at a distance $\varepsilon$ from $p_k$, i.e, 
                             $d(a_{r,k},p_k)=d(b_{r,k}, p_k)$=$\varepsilon$, and finally, let $D_{r,k}$ be the convex region bounded 
                             by $a_{rk}$ and $b_{rk}$ excluding point $p_r$. If $d(p_r, p_k) \leq \varepsilon$, then $D_{r,k}$ refers to the whole plane. <br><br>
@@ -149,7 +149,7 @@
                             We are able to determine whether $(v_r, v_s) \in E'$ by testing whether $p_s \in W_{r,s}$. For any vertex 
                             $r$, the algorithm would consider all pairs of vertices $(v_r, v_s)$ with $s$ ranging from $r+1$ to 
                             $n$. The main part of the procedure is to determine whether a point is in $W_{r,s}$ and to update $W_{r,s}$ from 
-                            $W_{r,s-1}$ efficiently. Since $W_{rs}$ is defined by $\bigcap_{r \leq k &lt; s}D_{r,k}$, the $D_{r,k}'s$ and the 
+                            $W_{r,s-1}$ efficiently. Since $W_{rs}$ is defined by $\bigcap_{r \leq k &lt; s}D_{r,k}$, the $D_{r,k}$'s and the 
                             $W_{r,s}$ are either the whole plane or a cone-shaped region bounded by the two rays emanating from $p_r$. As 
                             long as we can keep track of these two rays of $W_{r,s}$, we can check easily check whether $p_s \in W_{r,s}$
                             and update $W_{r,s}$ in constant-time. <br><br>
@@ -191,7 +191,8 @@
 
                             Once the graph $G_\varepsilon$ is constructed, a shortest path algorithm on a directed asyclic graph 
                             is used to compute the approximated polyline $P'$. See the previous page for a dynammic programming approach
-                            to solve that problem in $\mathcal{O}(n^2)$.
+                            to solve that problem in $\mathcal{O}(n^2)$. Therefore this approach improves the running time from 
+                            $\mathcal{O}(n^3)$ to $\mathcal{O}(n^2)$.
                          </p>
                     </div>
                 </div>

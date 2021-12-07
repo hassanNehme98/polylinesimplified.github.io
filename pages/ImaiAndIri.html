@@ -43,8 +43,8 @@
 
         <main>
             <section class="presentation">
-                <div class="Introduction">
-                    <div class="intro-text">
+                <div class="main-texts">
+                    <div class="explanation">
                         <h1>Imai and Iri</h1>
                         <br><br>
                         <p align="justify">
@@ -65,7 +65,7 @@
                         <p align="justify">
                             Let $C$ be a polygonal chain $&ltp_1, p_2, ..., p_n&gt$ and let $\varepsilon$ > 0 be a given threshold. Assume that 
                             we have a fixed distance function on the points in the plane. Imai and Iri formulated the problem in terms of 
-                            graph theory. We define an unweighted, directed graph $G_\varepsilon$ = $(V, E_\varepsilon)$, where V = $\{p_1, p_2, ..., p_n\}$
+                            graph theory. We define an unweighted, directed graph $G_\varepsilon$ = $(V, E_\varepsilon)$, where $V$ = $\{p_1, p_2, ..., p_n\}$
                             and
                             <br>
                             \begin{equation}
@@ -75,7 +75,7 @@
                             An $\varepsilon$-approximation of $C$ corresponds to a path from $p_1$ to $p_n$ in $G_\varepsilon$, and an 
                             $\varepsilon$-approximation with the minimum number of vertices corresponds to a shortest path from $p_1$ to $p_n$
                             in $G_\varepsilon$. Using this approach naively, any algorithm for the min-# problem takes $\Omega(n^2)$-time, as it
-                            needs to construct the grpah $G_\varepsilon$, which can have $\Theta(n^2)$ edges and computing the shortest-path in 
+                            needs to construct the graph $G_\varepsilon$, which can have $\Theta(n^2)$ edges and computing the shortest-path in 
                             a directed asyclic graph (DAG) takes $\Omega(n^2)$-time.
                         </p>
                         <figure id="polylineExamples">    
@@ -128,7 +128,7 @@
                             <b>End</b>;
                             <br><br>
                             This other part of the algorithm runs in $\mathcal{O}(n^2)$-time. The running time of the whole 
-                            algorithm is therefore $\mathcal{O}(n^3).$
+                            algorithm is therefore $\mathcal{O}(n^3)$.
                         </p>
                         <br><br>
                         <p>

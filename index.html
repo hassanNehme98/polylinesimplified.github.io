@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- Font Awesome CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" integrity="sha512-i8+QythOYyQke6XbStjt9T4yQHhhM+9Y9yTY1fOxoDQwsQpKMEpIoSQZ8mVomtnVCf9PBvoQDnKl06gGOOD19Q==" crossorigin="anonymous" />
         <script type="text/x-mathjax-config">
             MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
@@ -44,13 +43,13 @@
 
         <main>
             <section class="presentation">
-                <div class="Introduction">
-                    <div class="intro-text" id="introText">
+                <div class="main-texts">
+                    <div class="explanation" id="introText">
                         <h1>Polygonal chain </h1>
                         <p align="justify">
                             A polygonal chain in the euclidean plane is defined as an ordered list of vertices
                             such that any two consecutive vertices are connected by a line segment.
-                            More formally, a polygonal chain P is a curve specified by a sequence of points 
+                            More formally, a polygonal chain $P$ is a curve specified by a sequence of points 
                             (${A_1}, {A_2},...,{A_n}$) called its vertices. A simple polygonal chain is one in which 
                             every line segment is non self-intersecting. This is the type of polylines that we will be discussing.
                             A polygonal chain can also be called a polygonal curve, polyline, piecewise linear curve and a broken line.
@@ -64,15 +63,15 @@
             </section> 
  
             <section class="presentation">
-                <div class="Introduction">
-                    <div class="intro-text">
+                <div class="main-texts">
+                    <div class="explanation">
                         <h1>The problem</h1>
                         <p align="justify">
-                        Find $V' \subseteq V$, such that for all $S' = (v_i, v_j) \in V'$: 
+                        Find $V' \subseteq V$, such that for all $S = (v_i, v_j) \in V'$: 
                         \begin{equation}
                             d_{hdorff}(S, L) \leq \varepsilon
                         \end{equation}
-                        where $L$ = $(v_i, v_{i+1}, ... , v_{j-1}, v_{j})$ is the line defined by the two points $v_i$ and $v_j$. <br><br>
+                        where $L$ = $(v_i, v_{i+1}, ... , v_{j-1}, v_{j})$ is the curve with endpoints $v_i$ and $v_j$. <br><br>
                         This problem is referred to as the <b>Min-#</b>problem (see next page).
                         </p>
                         <br><br>
@@ -105,12 +104,12 @@
                         <h1>Applications</h1>
                         <p align="justify">
                         The problem of approximating of a simple polygonal chain arises in many applications. Polylines are easy to specify
-                        and represent and a variety of curves in the plane can be approximated by a polygonal curve. 
+                        and represent. A variety of curves in the plane can be approximated by a polygonal curve. 
                         <br><br>
                         <h2>Geographic information systems (GIS)</h2>
                         <p align="justify">
                         Polyline simplification plays and important role in cartographic generalization because most map features are represented
-                        by polylines and polygons composed of polylines. This simplification reduces  unnecessary detauls, makes the map more legible 
+                        by polylines and polygons composed of polylines. This simplification reduces  unnecessary details, makes the map more legible 
                         and clear. It also improves efficiency and cartographic visualizations.
                         </p>
                         <div id="GeoImages">
@@ -162,7 +161,7 @@
                             One of the oldest and most notable line simplification algorithms is the Douglas-Peucker 
                             algorithm. Invented in 1970 for reducing the number of points required to represent a digitized line or its caricature 
                             in the context of computer graphics and image processing. It is a heuristical approach that computes an approxmation within
-                            a specified error $\varepsilon$. The algorithm simple, it starts by approximating the subchain $P_1^{n}$ by the line
+                            a specified error $\varepsilon$. The algorithm is simple, it starts by approximating the subchain $P_1^{n}$ by the line
                             segment $P_1P_n$. If the distance of the farthest point $P_k$ from $P_1P_n$ is greater than the tolerance threshold, we 
                             recursively approximate the two polygonal chains $P_1P_k$ and $P_kP_n$ and concatenate their results, otherwise all points in between 
                             $P_1$ and $P_n$ are removed. It has been shown that this algorithm can be implemented 

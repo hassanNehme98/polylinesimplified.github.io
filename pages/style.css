@@ -91,11 +91,11 @@ nav {
   margin: 5%;
 }
 
-.introduction {
+.main-texts {
   flex: 1;
 }
 
-.intro-text h1 {
+.explanation h1 {
   font-size: 44px;
   font-weight: 500;
   background: linear-gradient(to right, #262633, #6f6f89);
@@ -103,7 +103,7 @@ nav {
   -webkit-text-fill-color: transparent;
 }
 
-.intro-text p {
+.explanation p {
   margin-top: 5px;
   font-size: 22px;
   color: #323246;

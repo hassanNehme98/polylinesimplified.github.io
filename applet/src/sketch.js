@@ -3,13 +3,16 @@
  */
 
 /*----------------------------------------------USAGE-------------------------------------------------
-Approximate a polyline using Imai and Iri's algorithm.
+Approximate a polyline using Imai and Iri's algorithm and Dynamic programming.
 Draw the simple polyline by clicking on the screen to create points. Each time you click, 
 an edge is drawn by connecting the current chosen point to the last chosen point. This only happens
 if the point that you choose, can actually be chosen; meaning that the edge won't cross the curve. 
 If it does, then  the program won't allow it, and hence, nothing will happen! When you choose to 
 approximate the polyline, click on the button "approximate", this will draw the approximated polygon
-in another color. A built-in polyline is available and can also be approximated.
+in another color, the value of the threshold can be changed using the input text. 
+A built-in polyline is available and can also be approximated, these can be accessed using the buttons
+"Random polyline" and "Random map". The former provides polylines that are based on mathematical functions
+and the latter provides country maps.
 *-----------------------------------------------------------------------------------------------------/
 
 /* eslint-disable no-undef, no-unused-vars */
@@ -135,7 +138,19 @@ function setup() {
   randomMap.position(835, 85);
   randomMap.mousePressed(function randMap() {
     resetpoints();
-    mapAsPolyline = loadStrings("./src/maps/belgium.txt", mapFileLoad);
+    const randNum = Math.floor(Math.random() * 3);
+    let fileName = "";
+    switch (randNum) {
+      case 0:
+        fileName = "belgium.txt";
+        break;
+      case 1:
+        fileName = "france.txt";
+        break;
+      case 2:
+        fileName = "germany.txt";
+    }
+    mapAsPolyline = loadStrings(`./src/maps/${fileName}`, mapFileLoad);
   });
   styleButton(randomMap, "#00262A");
 
