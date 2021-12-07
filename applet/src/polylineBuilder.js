@@ -97,4 +97,25 @@ class polylineBuilder {
     console.log(curvePoints);
     return curvePoints;
   }
+
+  /**
+   * Builds a polyline from data in a file representing a map.
+   * @param {String} polygon The string containing the file data.
+   * @returns The polyline as an array of points.
+   */
+  loadMap(polygon) {
+    let polyline = [];
+    console.log(polygon.length);
+    if (polygon.length > 0) {
+      for (let i = 0; i < polygon.length; i++) {
+        const coords = polygon[i].split(/(\s+)/).filter(function (e) {
+          return e.trim().length > 0;
+        });
+        polyline.push(new Point(coords[0], coords[1]));
+      }
+    } else {
+      console.error("File is empty");
+    }
+    return polyline;
+  }
 }

@@ -22,18 +22,24 @@ class Point {
 }
 //Points contains all the points of the sketch.
 var points = [];
-//A polyline which is available for the user.
-builtInPolyline = undefined;
+//A polyline which is available for the user ( either as mathematical function or a country map).
+innerPolyline = undefined;
 //Approximated polyline
 approximation = undefined;
 //Creator is an instance of the utils class.
 let creator = undefined;
 //An object of the class polylineSimplifier to compute the approximation.
 let solver = undefined;
-//ShowGraph is used to know when to show the Imai and Iri's graph to the user.
-let showGraph = false;
 //polylineCreator is used to provide the user with available polylines.
 let polyDrawer = undefined;
+//mapAsPolyline is used to read the map of a country from a file.
+let mapAsPolyline = undefined;
+//ShowGraph is used to know when to show the Imai and Iri's graph to the user.
+let showGraph = false;
+//drawPolyline is used to know when to draw the initial polyline.
+let drawPolyline = true;
+//countryMap is used to know if a country map is drawn.
+let countryMap = false;
 
 /**
  * Adds CSS to a button.
@@ -60,10 +66,13 @@ function resetpoints() {
   points = [];
   showGraph = undefined;
   polygonCompleted = false;
-  builtInPolyline = false;
+  innerPolyline = undefined;
   approximation = undefined;
+  countryMap = false;
+  drawPolyline = true;
 
   buttonBuiltIn.removeAttribute("disabled");
+  randomMap.removeAttribute("disabled");
   approximate.attribute("disabled", "");
   visualGraph.attribute("disabled", "");
 }
@@ -84,25 +93,51 @@ function setup() {
   button = createButton("Clear");
   button.position(30, 85);
   button.mousePressed(resetpoints);
-  styleButton(button);
+  styleButton(button, "#8B0000");
 
-  approximate = createButton("Imai and Iri's approximation");
-  approximate.position(200, 85);
+  approximate = createButton("Approximate");
+  approximate.position(120, 85);
   approximate.mousePressed(function getApproximation() {
     showGraph = false;
-    const polyChain = builtInPolyline ? builtInPolyline : points;
+    drawPolyline = false;
+    const polyChain = innerPolyline ? innerPolyline : points;
     approximation = solver.computeApproximation(polyChain);
   });
   approximate.attribute("disabled", "");
-  styleButton(approximate);
+  styleButton(approximate, "green");
+
+  visualGraph = createButton("Visualize Graph");
+  visualGraph.position(260, 85);
+  visualGraph.mousePressed(function getGraph() {
+    approximation = undefined;
+    showGraph = true;
+  });
+  visualGraph.attribute("disabled", "");
+  styleButton(visualGraph, "#0C8E77");
 
   buttonBuiltIn = createButton("Random Polyline");
-  buttonBuiltIn.position(470, 85);
+  buttonBuiltIn.position(425, 85);
   buttonBuiltIn.mousePressed(function availablePoly() {
     resetpoints();
-    builtInPolyline = polyDrawer.chooseRandFunc();
+    innerPolyline = polyDrawer.chooseRandFunc();
   });
-  styleButton(buttonBuiltIn, "orange");
+  styleButton(buttonBuiltIn, "#005E6A");
+
+  selfIntersecting = createButton("Self-Intersecting curve");
+  selfIntersecting.position(600, 85);
+  selfIntersecting.mousePressed(function selfIntersection() {
+    resetpoints();
+    innerPolyline = polyDrawer.intersectingCurves();
+  });
+  styleButton(selfIntersecting, "#004b55");
+
+  randomMap = createButton("random map");
+  randomMap.position(835, 85);
+  randomMap.mousePressed(function randMap() {
+    resetpoints();
+    mapAsPolyline = loadStrings("./src/maps/belgium.txt", mapFileLoad);
+  });
+  styleButton(randomMap, "#00262A");
 
   input = createInput();
   input.position(1120, 50);
@@ -113,23 +148,14 @@ function setup() {
     solver.setDefaultEps(input.value());
   });
   styleButton(submission, "green", 0.09);
+}
 
-  visualGraph = createButton("Visualize Graph");
-  visualGraph.position(650, 85);
-  visualGraph.mousePressed(function getGraph() {
-    approximation = undefined;
-    showGraph = true;
-  });
-  visualGraph.attribute("disabled", "");
-  styleButton(visualGraph, "purple");
-
-  selfIntersecting = createButton("Self-Intersecting curve");
-  selfIntersecting.position(820, 85);
-  selfIntersecting.mousePressed(function selfIntersection() {
-    resetpoints();
-    builtInPolyline = polyDrawer.intersectingCurves();
-  });
-  styleButton(selfIntersecting, "red");
+/**
+ * Reads the coordinates of the points on the map from a file.
+ */
+function mapFileLoad() {
+  innerPolyline = polyDrawer.loadMap(mapAsPolyline);
+  countryMap = true;
 }
 
 /**
@@ -146,34 +172,40 @@ function draw() {
   fill("#bed3c3");
   text("Approximating polylines with Imai and Iri's algorithm", 30, 50);
   textSize(20);
-  fill("#ebaca2");
+  fill("#CB6E0B");
   text("Error bound:", 1120, 45);
   stroke(100, 0, 200);
   for (i in points) {
     ellipse(points[i].x, points[i].y, 1, 1);
   }
   strokeWeight(4);
-  if (points) creator.simplePolyline(points, [100, 0, 200]);
   if (points && points.length > 1) {
     visualGraph.removeAttribute("disabled");
   }
-  if ((points && points.length > 1) || builtInPolyline) {
+  if ((points && points.length > 1) || innerPolyline) {
     approximate.removeAttribute("disabled");
   }
   if (showGraph) {
     solver.showGraph(points);
   } else if (approximation) {
-    creator.simplePolyline(approximation, [255, 255, 255]);
+    if (countryMap) creator.simpleClosedCurve(approximation, [255, 255, 255]);
+    else creator.simplePolyline(approximation, [255, 255, 255]);
     stroke(0, 0, 0);
     textSize(15);
     fill("#0b7aa7");
 
-    const nbInitPoints = builtInPolyline ? builtInPolyline.length : points.length;
+    const nbInitPoints = innerPolyline ? innerPolyline.length : points.length;
     text(`Initial polyline: ${nbInitPoints} points`, 1122, 105);
     text(`Approximation: ${approximation.length} points`, 1122, 125);
   }
-  if (builtInPolyline) creator.simplePolyline(builtInPolyline);
-  fill("black");
+
+  if (drawPolyline && !showGraph) {
+    if (points) creator.simplePolyline(points, [100, 0, 200]);
+    if (innerPolyline) {
+      if (countryMap) creator.simpleClosedCurve(innerPolyline);
+      else creator.simplePolyline(innerPolyline);
+    }
+  }
 }
 
 /**
@@ -182,8 +214,9 @@ function draw() {
  * (Edges cannot cross each other).
  */
 function mousePressed() {
-  if (mouseY < 150 || builtInPolyline) return;
+  if (mouseY < 150 || innerPolyline || approximation || showGraph) return;
   buttonBuiltIn.attribute("disabled", "");
+  randomMap.attribute("disabled", "");
   const nextPoint = new Point(mouseX, mouseY);
   if (creator.isValid(nextPoint)) {
     points.push(nextPoint);

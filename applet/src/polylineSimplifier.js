@@ -27,7 +27,6 @@ class polylineSimplifier {
    * @param {Object} polyline The array of points defining the polygonal chain.
    */
   showGraph(polyline) {
-    console.log("okkkazeza");
     this.createGraph(this.#defaultEps, polyline);
     stroke(255, 0, 0);
     for (let i = 0; i < this.#IIgraph.length; ++i)

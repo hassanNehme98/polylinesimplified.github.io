@@ -48,6 +48,28 @@ class utils {
   }
 
   /**
+   * Draws an edge between every two consecutive points in the array of points
+   * and closes the curve by adding one extra edge connecting the first
+   * and the last point of the curve.
+   * @param {Object} polygon The curve.
+   * @param {Object} strokeVals The color in RGB.
+   */
+  simpleClosedCurve(polygon, strokeVals = [100, 0, 200]) {
+    stroke(strokeVals[0], strokeVals[1], strokeVals[2]);
+    if (polygon.length > 1) {
+      for (let i = 0; i < polygon.length - 1; ++i) {
+        line(polygon[i].x, polygon[i].y, polygon[i + 1].x, polygon[i + 1].y);
+      }
+      line(
+        polygon[0].x,
+        polygon[0].y,
+        polygon[polygon.length - 1].x,
+        polygon[polygon.length - 1].y
+      );
+    }
+  }
+
+  /**
    * Given four points  p1, p2, p3 and p4, determines if the line segment p1p2
    * intersect the line segment p3p4.
    * @param {Point} p1 The first endpoint of the first line segment.
