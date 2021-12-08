@@ -138,7 +138,7 @@ function setup() {
   randomMap.position(835, 85);
   randomMap.mousePressed(function randMap() {
     resetpoints();
-    const randNum = Math.floor(Math.random() * 3);
+    const randNum = Math.floor(Math.random() * 4);
     let fileName = "";
     switch (randNum) {
       case 0:
@@ -149,6 +149,10 @@ function setup() {
         break;
       case 2:
         fileName = "germany.txt";
+        break;
+      case 3:
+        fileName = "lebanon.txt";
+        break;
     }
     mapAsPolyline = loadStrings(`./src/maps/${fileName}`, mapFileLoad);
   });
