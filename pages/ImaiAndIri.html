@@ -93,15 +93,15 @@
                             &emsp; define $v_i$ as part of $G_\varepsilon$; <br>
                             <b>For</b> each $v_i \in \{v_i,..., v_n\}$ <b>do</b>: <br>
                             &emsp; <b>For</b> each $v_j \in \{v_{i+2},..., v_n\}$ <b>do</b>: <br>
-                            &emsp; Test for $k$ = $i+1, ...,j-1$ if <b>dist</b>$(v_k, v_iv_j)$ $\leq$ $\varepsilon$; <br>
-                            &emsp; if <b>TRUE</b> for all $k$, define $(v_i, v_j)$ as part of $G_\varepsilon$; <br>
+                            &emsp; &emsp; Test for $k$ = $i+1, ...,j-1$ if <b>dist</b>$(v_k, v_iv_j)$ $\leq$ $\varepsilon$; <br>
+                            &emsp; &emsp; if <b>TRUE</b> for all $k$, define $(v_i, v_j)$ as part of $G_\varepsilon$; <br>
                             &emsp; <b>End</b>; <br>
                             <b>End</b>;
                             <br><br>
                             This part of the whole algorithm runs in time $\mathcal{O}(n^3)$-time.
                         </p>
                         <br><br>
-                        <h2>Finding the shortest path using Dynammic programming</h2>
+                        <h2>Finding the shortest path using Dynamic programming</h2>
                         <br>
                         <ul>
                             <ul style="font-size:22px">
@@ -117,7 +117,7 @@
                             Let $W$ denote the weight (length) of the edge $[i, j]$. <br>
                             <b>Data:</b> A directed asyclic graph $G_\varepsilon$.<br>
                             <b>Result:</b> The shortest path in $G_\varepsilon$. <br> 
-                            <b>dist</b>($v_1,v_1$) = $\infty$ ; <br>
+                            <b>dist</b>($v_1,v_1$) = 0 ; <br>
                             <b>For</b> $j$ = 2 to $n$ <b>do</b>: <br>
                             &emsp; <b>dist</b>($v_1,v_j$) = $\infty$;<br>
                             &emsp; <b>For</b> $(v_i, v_j) \in A$ <b>do</b>: <br>
